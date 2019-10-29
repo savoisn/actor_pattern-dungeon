@@ -12,8 +12,6 @@ defmodule DungeonTest do
     :timer.sleep(2)
     refute Process.alive?(monster)
 
-    assert_raise RuntimeError, "Princess dead", fn ->
-      Princess.attack_with_mace(princess, monster)
-    end
+    assert Process.alive?(princess)
   end
 end

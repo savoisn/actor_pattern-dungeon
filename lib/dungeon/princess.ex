@@ -32,5 +32,7 @@ defmodule Dungeon.Princess do
       {:attack_with_mace, monster} ->
         send(monster, {:attacked})
     end
+
+    wait_for_orders()
   end
 end
