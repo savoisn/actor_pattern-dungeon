@@ -1,4 +1,5 @@
 defmodule Dungeon.PrincessTest do
+  alias Dungeon.Princess
   use ExUnit.Case
   # doctest Dungeon.Princess
 
@@ -11,6 +12,15 @@ defmodule Dungeon.PrincessTest do
     end)
   end
 
-  test "dummy test" do
+  test "princess should say hi" do
+    assert Princess.hi() == :hello
+  end
+
+  test "princess should start as a process" do
+    pid = Princess.start()
+    assert is_pid(pid)
+    assert Process.alive?(pid)
+    :timer.sleep(1)
+    assert !Process.alive?(pid)
   end
 end
