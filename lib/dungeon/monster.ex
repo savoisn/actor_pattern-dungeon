@@ -25,9 +25,14 @@ defmodule Dungeon.Monster do
   end
 
   # Client API
-  def start(life = _state) do
-    {:ok, pid} = GenServer.start_link(__MODULE__, life)
+  def start(life, name) do
+    {:ok, pid} = GenServer.start_link(__MODULE__, life, name: name)
     pid
+  end
+
+  def start_link(life, name) do
+    IO.inspect(["ICI", life])
+    GenServer.start_link(__MODULE__, life, name: name)
   end
 
   def attacked(monster, value) do

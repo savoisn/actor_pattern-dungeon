@@ -17,7 +17,7 @@ defmodule Dungeon.MonsterTest do
   end
 
   test "monster start" do
-    pid = Monster.start(3)
+    pid = Monster.start(3, :monster_test)
     assert is_pid(pid)
     assert Process.alive?(pid)
     :timer.sleep(1)
