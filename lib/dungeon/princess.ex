@@ -23,7 +23,7 @@ defmodule Dungeon.Princess do
 
   def attack_with_mace(princess, monster) do
     case Process.alive?(princess) do
-      true -> send(princess, {:attack_with_mace, monster})
+      true -> send(princess, {:attack_with_mace, monster, @mace_attack_value})
       false -> raise "Princess dead"
     end
   end
@@ -34,8 +34,8 @@ defmodule Dungeon.Princess do
       {:attack_with_sword, monster, value} ->
         Monster.attacked(monster, value)
 
-      {:attack_with_mace, monster} ->
-        send(monster, {:attacked})
+      {:attack_with_mace, monster, value} ->
+        send(monster, {:attacked, value})
     end
 
     wait_for_orders()

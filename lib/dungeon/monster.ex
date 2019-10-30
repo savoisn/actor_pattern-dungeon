@@ -24,6 +24,10 @@ defmodule Dungeon.Monster do
     {:noreply, state - value}
   end
 
+  def handle_call({:life}, _caller, life) do
+    {:reply, life, life}
+  end
+
   # Client API
   def start(life, name) do
     {:ok, pid} = GenServer.start_link(__MODULE__, life, name: name)
@@ -36,5 +40,9 @@ defmodule Dungeon.Monster do
 
   def attacked(monster, value) do
     GenServer.cast(monster, {:attacked, value})
+  end
+
+  def get_life(monster) do
+    GenServer.call(monster, {:life})
   end
 end

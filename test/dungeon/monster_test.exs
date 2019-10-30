@@ -34,4 +34,10 @@ defmodule Dungeon.MonsterTest do
     Process.flag(:trap_exit, false)
     refute Process.alive?(pid)
   end
+
+  test "Monster get life" do
+    monster = Monster.start(3, :monster_test)
+    assert Monster.get_life(:monster_test) == 3
+    refute Monster.get_life(:monster_test) == 2
+  end
 end
