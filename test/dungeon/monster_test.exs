@@ -22,8 +22,16 @@ defmodule Dungeon.MonsterTest do
     assert Process.alive?(pid)
     :timer.sleep(1)
     assert Process.alive?(pid)
-    send(pid, {:attacked})
+    Monster.attacked(pid, 2)
     :timer.sleep(1)
-    assert !Process.alive?(pid)
+    Process.flag(:trap_exit, true)
+
+    Monster.attacked(pid, 2)
+    :timer.sleep(10)
+
+    assert_receive {:EXIT, _, :death_by_princess}
+
+    Process.flag(:trap_exit, false)
+    refute Process.alive?(pid)
   end
 end

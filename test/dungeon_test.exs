@@ -9,9 +9,16 @@ defmodule DungeonTest do
     princess = Princess.start_killing_machine()
     assert Process.alive?(princess)
     Princess.attack_with_sword(princess, monster)
+
+    Process.flag(:trap_exit, true)
+
+    Princess.attack_with_sword(princess, monster)
     :timer.sleep(2)
-    refute Process.alive?(monster)
+    assert_receive {:EXIT, _, :death_by_princess}
+
+    Process.flag(:trap_exit, false)
 
     assert Process.alive?(princess)
+    refute Process.alive?(monster)
   end
 end

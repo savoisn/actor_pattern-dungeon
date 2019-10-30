@@ -1,7 +1,12 @@
 defmodule Dungeon.Princess do
+  alias Dungeon.Monster
+
   def hi() do
     :hello
   end
+
+  @sword_attack_value 2
+  @mace_attack_value 3
 
   def start() do
     spawn(fn -> hi() end)
@@ -13,7 +18,7 @@ defmodule Dungeon.Princess do
   end
 
   def attack_with_sword(princess, monster) do
-    send(princess, {:attack_with_sword, monster})
+    send(princess, {:attack_with_sword, monster, @sword_attack_value})
   end
 
   def attack_with_mace(princess, monster) do
@@ -26,8 +31,8 @@ defmodule Dungeon.Princess do
   # Server
   def wait_for_orders() do
     receive do
-      {:attack_with_sword, monster} ->
-        send(monster, {:attacked})
+      {:attack_with_sword, monster, value} ->
+        Monster.attacked(monster, value)
 
       {:attack_with_mace, monster} ->
         send(monster, {:attacked})
