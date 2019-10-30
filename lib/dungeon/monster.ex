@@ -31,7 +31,6 @@ defmodule Dungeon.Monster do
   end
 
   def start_link(life, name) do
-    IO.inspect(["ICI", life])
     GenServer.start_link(__MODULE__, life, name: name)
   end
 
